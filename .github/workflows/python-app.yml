@@ -28,7 +28,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.10'
+          python-version: '3.13'
 
       - name: Install dependencies
         run: pip install pyinstaller
@@ -57,4 +57,4 @@ jobs:
           tag_name: ${{ github.ref_name }}
           files: artifacts/**/*
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # 使用默认的 GITHUB_TOKEN
+          GITHUB_TOKEN: ${{ secrets.TOKEN }}  # 使用默认的 GITHUB_TOKEN
