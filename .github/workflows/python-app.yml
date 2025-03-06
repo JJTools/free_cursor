@@ -1,7 +1,8 @@
 name: Build and Release
 on:
   push:
-    branches: ["main"]
+    tags:
+      - "v*"  # 仅当推送的标签以 "v" 开头时触发（例如 v1.0.0）
   workflow_dispatch:
 
 jobs:
@@ -27,7 +28,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.10'
+          python-version: '3.13'
 
       - name: Install dependencies
         run: pip install pyinstaller
@@ -53,4 +54,5 @@ jobs:
       - name: Create Release
         uses: softprops/action-gh-release@v1
         with:
+          tag_name: ${{ github.ref_name }}  # 使用推送的标签名称
           files: artifacts/**/*
