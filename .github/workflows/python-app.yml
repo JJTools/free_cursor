@@ -2,7 +2,7 @@ name: Build and Release
 on:
   push:
     tags:
-      - "v*"  # 仅当推送的标签以 "v" 开头时触发（例如 v1.0.0）
+      - "v*"  # 仅当推送标签时触发
   workflow_dispatch:
 
 jobs:
@@ -28,31 +28,10 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.13'
+          python-version: '3.10'
 
       - name: Install dependencies
         run: pip install pyinstaller
 
       - name: Build executable
-        run: ${{ matrix.build_command }}
-
-      - name: Upload artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: ${{ matrix.artifact_name }}-build
-          path: dist/
-
-  release:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Download artifacts
-        uses: actions/download-artifact@v4
-        with:
-          path: artifacts
-
-      - name: Create Release
-        uses: softprops/action-gh-release@v1
-        with:
-          tag_name: ${{ github.ref_name }}  # 使用推送的标签名称
-          files: artifacts/**/*
+        run: ${{
