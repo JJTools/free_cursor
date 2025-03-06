@@ -56,6 +56,8 @@ jobs:
 
       - name: Create Git tag
         uses: actions/github-script@v6
+        env:
+          GITHUB_TOKEN: ${{ secrets.PAT }}  # 使用 PAT
         with:
           script: |
             const version = "${{ steps.version.outputs.version }}";
